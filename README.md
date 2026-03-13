@@ -1,1 +1,1 @@
-# public-grievence-intelligence-and-resolution-platform-
+Public Grievance Intelligence & Resolution Platform
