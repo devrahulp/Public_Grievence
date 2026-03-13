@@ -1,0 +1,52 @@
+[
+  {
+    "id": "CBR-A475",
+    "category": "tree",
+    "description": "xfdg",
+    "latitude": 13.07443,
+    "longitude": 77.49982,
+    "severity": "low",
+    "image": "uploads/CBR-A475.webp",
+    "status": "submitted",
+    "zone": "Mahadevapura",
+    "created_at": "2026-03-13T23:29:00.772431",
+    "eta": "2-4 days"
+  },
+  {
+    "id": "CaR-A475",
+    "category": "garbage",
+    "description": "xfdg",
+    "latitude": 13.07443,
+    "longitude": 77.49982,
+    "severity": "low",
+    "image": "uploads/CBR-A475.webp",
+    "status": "submitted",
+    "zone": "Mahadevapura",
+    "created_at": "2026-03-13T23:29:00.772431",
+    "eta": "2-4 days"
+  },
+  {
+    "id": "CBR-A495",
+    "category": "tree",
+    "description": "xfdg",
+    "latitude": 13.07443,
+    "longitude": 77.49982,
+    "severity": "low",
+    "image": "uploads/CBR-A475.webp",
+    "status": "submitted",
+    "zone": "Mahadevapura",
+    "created_at": "2026-03-13T23:29:00.772431",
+    "eta": "2-4 days"
+  },
+  {
+    "complaint_id": "CBR-E11C",
+    "category": "abandoned_building",
+    "description": "jjkjbkj",
+    "latitude": 13.06733,
+    "longitude": 77.5037,
+    "severity": "medium",
+    "status": "Pending",
+    "image": null,
+    "created_at": "2026-03-14"
+  }
+]

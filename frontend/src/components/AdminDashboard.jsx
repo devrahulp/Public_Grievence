@@ -1,83 +1,149 @@
 import React, { useEffect, useState } from "react";
 import ComplaintMap from "./ComplaintMap";
+import AnalyticsPanel from "./AnalyticsPanel";
+import "./AdminDashboard.css";
 
 function AdminDashboard() {
 
-  const [complaints, setComplaints] = useState([]);
-  const [filter, setFilter] = useState("");
+  const [complaints,setComplaints] = useState([]);
+  const [analytics,setAnalytics] = useState(null);
+  const [filter,setFilter] = useState("");
 
-  useEffect(() => {
+  useEffect(()=>{
 
     fetch("http://127.0.0.1:8000/complaints")
-      .then(res => res.json())
-      .then(data => setComplaints(data));
+      .then(res=>res.json())
+      .then(data=>setComplaints(data));
 
-  }, []);
+    fetch("http://127.0.0.1:8000/analytics")
+      .then(res=>res.json())
+      .then(data=>setAnalytics(data));
 
-  return (
-    <div>
+  },[]);
 
-      <h2>Admin Dashboard</h2>
+  const filtered = filter
+  ? complaints.filter(c=>c.category===filter)
+  : complaints;
 
-      <label>Filter by Category</label>
+  return(
 
-      <select onChange={(e) => setFilter(e.target.value)}>
+<div className="dashboard">
 
-        <option value="">All</option>
-        <option>Abandoned Vehicle Complaint</option>
-        <option>Alley Light Out</option>
-        <option>Graffiti Removal</option>
-        <option>Garbage Carts</option>
-        <option>Pot Holes</option>
-        <option>Rodent Baiting</option>
-        <option>Sanitation Code Complaints</option>
-        <option>Street Lights All Out</option>
-        <option>Tree Debris</option>
-        <option>Tree Trims</option>
-        <option>Vacant and Abandoned Buildings</option>
+{/* HEADER */}
 
-      </select>
+<header className="dashboard-header">
 
-      <br /><br />
+<h1>🌆 Civic Intelligence Dashboard</h1>
 
-      <ComplaintMap complaints={complaints} />
+<select onChange={e=>setFilter(e.target.value)}>
 
-      <br />
+<option value="">All Categories</option>
+<option value="tree">Tree Debris</option>
+<option value="garbage">Garbage</option>
+<option value="graffiti">Graffiti Removal</option>
+<option value="pothole">Pot Holes</option>
+<option value="abandoned_vehicle">Abandoned Vehicle</option>
+<option value="abandoned_building">Abandoned Buildings</option>
 
-      <table border="1">
+</select>
 
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Category</th>
-            <th>Description</th>
-            <th>Location</th>
-            <th>Status</th>
-          </tr>
-        </thead>
+</header>
 
-        <tbody>
 
-          {complaints
-            .filter(c => filter === "" || c.category === filter)
-            .map(c => (
+{/* STATISTICS */}
 
-              <tr key={c.complaint_id}>
-                <td>{c.complaint_id}</td>
-                <td>{c.category}</td>
-                <td>{c.description}</td>
-                <td>{c.latitude}, {c.longitude}</td>
-                <td>{c.status}</td>
-              </tr>
+{analytics && (
 
-            ))}
+<div className="stats-grid">
 
-        </tbody>
+<div className="stat-card">
 
-      </table>
+<span>Total Complaints</span>
+<h2>{analytics.total}</h2>
 
-    </div>
-  );
+</div>
+
+<div className="stat-card">
+
+<span>Today's Issues</span>
+<h2>{analytics.today}</h2>
+
+</div>
+
+<div className="stat-card">
+
+<span>High Severity</span>
+<h2>{analytics.high_severity}</h2>
+
+</div>
+
+</div>
+
+)}
+
+
+{/* ANALYTICS CHARTS */}
+
+<AnalyticsPanel analytics={analytics}/>
+
+
+{/* MAP */}
+
+<div className="map-section">
+
+<h2>Complaint Heatmap</h2>
+
+<ComplaintMap complaints={filtered}/>
+
+</div>
+
+
+{/* TABLE */}
+
+<div className="table-section">
+
+<h2>Complaints</h2>
+
+<table>
+
+<thead>
+
+<tr>
+<th>ID</th>
+<th>Category</th>
+<th>Description</th>
+<th>Location</th>
+<th>Status</th>
+</tr>
+
+</thead>
+
+<tbody>
+
+{filtered.map(c=>(
+
+<tr key={c.complaint_id}>
+
+<td>{c.complaint_id}</td>
+<td>{c.category}</td>
+<td>{c.description}</td>
+<td>{c.latitude},{c.longitude}</td>
+<td>{c.status}</td>
+
+</tr>
+
+))}
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+);
+
 }
 
 export default AdminDashboard;

@@ -1,35 +1,57 @@
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import { MapContainer, TileLayer, Marker } from "react-leaflet"
+import { useEffect } from "react"
+import L from "leaflet"
+import "leaflet.heat"
 
 function ComplaintMap({ complaints }) {
 
-  return (
-    <div style={{ height: "400px", width: "100%" }}>
+useEffect(()=>{
 
-      <MapContainer
-        center={[20.5937, 78.9629]}
-        zoom={5}
-        style={{ height: "100%", width: "100%" }}
-      >
+const map = window.leafletMap
 
-        <TileLayer
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        />
+if(!map) return
 
-        {complaints.map((c) => (
-          <Marker
-            key={c.complaint_id}
-            position={[c.latitude, c.longitude]}
-          >
-            <Popup>
-              {c.description}
-            </Popup>
-          </Marker>
-        ))}
+const heatPoints = complaints.map(c => [
+c.latitude,
+c.longitude,
+1
+])
 
-      </MapContainer>
+L.heatLayer(heatPoints,{
+radius:25,
+blur:15,
+maxZoom:17
+}).addTo(map)
 
-    </div>
-  );
+},[complaints])
+
+
+return(
+
+<MapContainer
+center={[12.9716,77.5946]}
+zoom={12}
+style={{height:"400px"}}
+whenCreated={(map)=>window.leafletMap=map}
+>
+
+<TileLayer
+url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+/>
+
+{complaints.map(c=>(
+
+<Marker
+key={c.complaint_id}
+position={[c.latitude,c.longitude]}
+/>
+
+))}
+
+</MapContainer>
+
+)
+
 }
 
-export default ComplaintMap;
+export default ComplaintMap
