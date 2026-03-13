@@ -6,6 +6,7 @@ function ComplaintForm() {
   const [image,setImage] = useState(null);
   const [location,setLocation] = useState(null);
   const [complaintId,setComplaintId] = useState("");
+  const [category,setCategory] = useState("");
 
   const getLocation = () => {
 
@@ -53,7 +54,27 @@ function ComplaintForm() {
       <h2>Report an Issue</h2>
 
       <form onSubmit={submitComplaint}>
+        <label>Issue Category</label>
 
+<select
+onChange={(e)=>setCategory(e.target.value)}
+>
+
+<option value="">Select Issue</option>
+
+<option>Abandoned Vehicle Complaint</option>
+<option>Alley Light Out</option>
+<option>Graffiti Removal</option>
+<option>Garbage Carts</option>
+<option>Pot Holes</option>
+<option>Rodent Baiting</option>
+<option>Sanitation Code Complaints</option>
+<option>Street Lights All Out</option>
+<option>Tree Debris</option>
+<option>Tree Trims</option>
+<option>Vacant and Abandoned Buildings</option>
+
+</select>
         <textarea
         placeholder="Describe the issue"
         onChange={(e)=>setDescription(e.target.value)}
@@ -81,6 +102,7 @@ function ComplaintForm() {
 
         <button className="submit" type="submit">
           Submit Complaint
+          formData.append("category",category);
         </button>
 
       </form>

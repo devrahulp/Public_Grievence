@@ -20,10 +20,11 @@ os.makedirs(UPLOAD_FOLDER,exist_ok=True)
 
 @app.post("/submit-complaint")
 async def submit_complaint(
-    description:str = Form(...),
-    latitude:float = Form(...),
-    longitude:float = Form(...),
-    image:UploadFile = File(...)
+    category: str = Form(...),
+    description: str = Form(...),
+    latitude: float = Form(...),
+    longitude: float = Form(...),
+    image: UploadFile = File(...)
 ):
 
     complaint_id = str(uuid.uuid4())[:8]
@@ -34,13 +35,14 @@ async def submit_complaint(
         f.write(await image.read())
 
     complaint = {
-        "complaint_id":complaint_id,
-        "description":description,
-        "latitude":latitude,
-        "longitude":longitude,
-        "image":filepath,
-        "status":"Pending"
-    }
+    "complaint_id": complaint_id,
+    "category": category,
+    "description": description,
+    "latitude": latitude,
+    "longitude": longitude,
+    "image": filepath,
+    "status": "Pending"
+}
 
     complaints.append(complaint)
 
