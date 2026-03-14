@@ -1,6 +1,6 @@
-🌆 CivicPulse – AI-Powered Public Grievance Intelligence Platform
+🌆 CivicVoice – AI-Powered Public Grievance Intelligence Platform
 
-CivicPulse is an **AI-assisted civic issue reporting and intelligence platform** that enables citizens to report infrastructure issues and helps authorities **prioritize, analyze, and resolve complaints efficiently**.
+CivicVoice is an **AI-assisted civic issue reporting and intelligence platform** that enables citizens to report infrastructure issues and helps authorities **prioritize, analyze, and resolve complaints efficiently**.
 
 The platform combines **image-based classification, geospatial mapping, analytics dashboards, and real-time complaint tracking** to create a **data-driven civic governance system**.
 
@@ -22,13 +22,13 @@ Most current systems suffer from:
 * ❌ Lack of geographic visualization
 * ❌ Slow response times
 
-CivicPulse addresses these challenges by providing **AI-driven complaint classification and analytics-based prioritization**.
+CivicVoice addresses these challenges by providing **AI-driven complaint classification and analytics-based prioritization**.
 
 ---
 
 # 💡 Solution
 
-CivicPulse enables:
+CivicVoice enables:
 
 1. **Citizen Complaint Submission**
 2. **AI Classification of Issue Type**
