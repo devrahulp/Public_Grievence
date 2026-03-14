@@ -113,6 +113,7 @@ function AdminDashboard() {
 <th>Category</th>
 <th>Description</th>
 <th>Location</th>
+<th>Severity</th>
 <th>Status</th>
 </tr>
 
@@ -128,6 +129,7 @@ function AdminDashboard() {
 <td>{c.category}</td>
 <td>{c.description}</td>
 <td>{c.latitude},{c.longitude}</td>
+<td>{c.severity_score?.toFixed(1)}</td>
 <td>{c.status}</td>
 
 </tr>

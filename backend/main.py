@@ -7,15 +7,17 @@ import os
 import json
 from datetime import datetime
 from collections import Counter
-
+from clip_model import classify_image, get_severity
 import matplotlib.pyplot as plt
 from io import BytesIO
 import base64
 
-
 app = FastAPI()
 
+# -------------------------------
 # CORS
+# -------------------------------
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -50,7 +52,7 @@ def save_complaints(data):
 
 @app.post("/submit-complaint")
 async def submit_complaint(
-    category: str = Form(...),
+    category: str = Form("unknown"),
     description: str = Form(...),
     latitude: float = Form(...),
     longitude: float = Form(...),
@@ -65,11 +67,17 @@ async def submit_complaint(
     image_path = None
 
     if image and image.filename:
+
         ext = os.path.splitext(image.filename)[1]
+
         image_path = f"{UPLOAD_FOLDER}/{complaint_id}{ext}"
 
         with open(image_path, "wb") as f:
             f.write(await image.read())
+
+        # AI classification
+        category = classify_image(image_path)
+        severity = get_severity(category)
 
     complaint = {
         "complaint_id": complaint_id,
@@ -89,7 +97,9 @@ async def submit_complaint(
 
     return {
         "success": True,
-        "complaint_id": complaint_id
+        "complaint_id": complaint_id,
+        "category": category,
+        "severity": severity
     }
 
 
@@ -149,7 +159,9 @@ def analytics():
     ax1.plot(list(daily_counts.keys()), list(daily_counts.values()), marker="o")
 
     ax1.set_title("Complaint Trend")
+
     ax1.set_xlabel("Date")
+
     ax1.set_ylabel("Complaints")
 
     plt.xticks(rotation=45)

@@ -48,5 +48,38 @@
     "status": "Pending",
     "image": null,
     "created_at": "2026-03-14"
+  },
+  {
+    "complaint_id": "CBR-84CA",
+    "category": "abandoned_vehicle",
+    "description": "fjgkhb",
+    "latitude": 37.5682,
+    "longitude": 126.9977,
+    "severity": "medium",
+    "status": "Pending",
+    "image": null,
+    "created_at": "2026-03-14"
+  },
+  {
+    "complaint_id": "CBR-0751",
+    "category": "garbage",
+    "description": "kjkhjgv",
+    "latitude": 37.5682,
+    "longitude": 126.9977,
+    "severity": "medium",
+    "status": "Pending",
+    "image": null,
+    "created_at": "2026-03-14"
+  },
+  {
+    "complaint_id": "CBR-88D4",
+    "category": "abandoned_building",
+    "description": "pppppppppp",
+    "latitude": 13.07443,
+    "longitude": 77.49982,
+    "severity": "medium",
+    "status": "Pending",
+    "image": null,
+    "created_at": "2026-03-14"
   }
 ]
