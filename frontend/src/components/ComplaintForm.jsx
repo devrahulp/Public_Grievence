@@ -2,6 +2,8 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import { MapContainer, TileLayer, Marker, Circle, Popup, useMap } from "react-leaflet";
 import L from "leaflet";
 import "./ComplaintForm.css"
+
+
 /* ── Constants ── */
 const CATEGORIES = [
   { id:"tree",      emoji:"🌳",  label:"Tree Debris",          days:"2–4",  color:"#34d399",

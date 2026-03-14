@@ -401,7 +401,7 @@ export default function App() {
       )}
 
       <footer className="footer">
-        <div className="footer-logo"><span className="logo-gem">◈</span> CivicBridge</div>
+        <div className="footer-logo"><span className="logo-gem">◈</span> CivicVoice</div>
         <span>© 2025 BBMP Digital Services · Bengaluru</span>
       </footer>
     </div>
