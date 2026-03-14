@@ -34,10 +34,8 @@ function AdminDashboard() {
     setError(null);
 
     Promise.all([
-      fetch("http://127.0.0.1:8000/complaints")
-        .then(res => res.json()),
-      fetch("http://127.0.0.1:8000/analytics")
-        .then(res => res.json()),
+      fetch("/complaints").then(r => { if (!r.ok) throw new Error("API error"); return r.json(); }),
+      fetch("/analytics").then(r => { if (!r.ok) throw new Error("API error"); return r.json(); })
     ])
       .then(([complaintsData, analyticsData]) => {
         setComplaints(complaintsData);
@@ -240,10 +238,10 @@ function AdminDashboard() {
                     <td>{severityPill(c.severity)} {c.severity}</td>
                     <td>
                       {c.image ? (
-                        <a href={`http://127.0.0.1:8000/${c.image}`} target="_blank" rel="noreferrer">
+                        <a href={`/${c.image}`} target="_blank" rel="noreferrer">
                           <div style={{
                             width: "36px", height: "36px", borderRadius: "6px",
-                            backgroundImage: `url(http://127.0.0.1:8000/${c.image})`,
+                            backgroundImage: `url(/${c.image})`,
                             backgroundSize: "cover", backgroundPosition: "center",
                             border: "1px solid var(--border)"
                           }} title="View Image" />

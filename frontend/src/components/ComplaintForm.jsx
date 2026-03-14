@@ -6,59 +6,74 @@ import "./ComplaintForm.css"
 
 /* ── Constants ── */
 const CATEGORIES = [
-  { id:"tree",      emoji:"🌳",  label:"Tree Debris",          days:"2–4",  color:"#34d399",
-    desc:"Fallen branches, uprooted trees, debris blocking roads or pathways." },
-  { id:"garbage",   emoji:"🗑️",  label:"Garbage",              days:"1–2",  color:"#10b981",
-    desc:"Uncollected waste, overflowing bins, illegal dumping of trash." },
-  { id:"graffiti",  emoji:"🖌️",  label:"Graffiti Removal",     days:"5–7",  color:"#a78bfa",
-    desc:"Vandalism, unauthorized graffiti on public walls or infrastructure." },
-  { id:"pothole",   emoji:"🕳️",  label:"Pot Holes",            days:"3–5",  color:"#f59e0b",
-    desc:"Road craters, potholes, damaged asphalt causing vehicle damage." },
-  { id:"abandoned_vehicle", emoji:"🚗", label:"Abandoned Vehicle", days:"4–7", color:"#fb923c",
-    desc:"Vehicles left without movement for extended periods on public roads." },
-  { id:"abandoned_building", emoji:"🏚️", label:"Abandoned Buildings", days:"7–14", color:"#f87171",
-    desc:"Derelict structures posing safety hazards to the public." },
-    { id:"broken_streetlight", emoji:"💡", label:"Broken Streetlight", days:"3–5", color:"#fbbf24",
-      desc:"Non-functional streetlights affecting visibility and safety." },
-  { id:"water leakage", emoji:"💧", label:"Water Leakage",       days:"2–4",  color:"#3b82f6",
-    desc:"Burst pipes, water seepage, leaks causing water wastage or damage."
+  {
+    id: "tree", emoji: "🌳", label: "Tree Debris", days: "2–4", color: "#34d399",
+    desc: "Fallen branches, uprooted trees, debris blocking roads or pathways."
   },
   {
-    id:"flooded_road", emoji:"🌊", label:"Flooded Road",        days:"5–10", color:"#60a5fa",
-    desc:"Roads submerged due to heavy rains, poor drainage, causing traffic disruption."
+    id: "garbage", emoji: "🗑️", label: "Garbage", days: "1–2", color: "#10b981",
+    desc: "Uncollected waste, overflowing bins, illegal dumping of trash."
+  },
+  {
+    id: "graffiti", emoji: "🖌️", label: "Graffiti Removal", days: "5–7", color: "#a78bfa",
+    desc: "Vandalism, unauthorized graffiti on public walls or infrastructure."
+  },
+  {
+    id: "pothole", emoji: "🕳️", label: "Pot Holes", days: "3–5", color: "#f59e0b",
+    desc: "Road craters, potholes, damaged asphalt causing vehicle damage."
+  },
+  {
+    id: "abandoned_vehicle", emoji: "🚗", label: "Abandoned Vehicle", days: "4–7", color: "#fb923c",
+    desc: "Vehicles left without movement for extended periods on public roads."
+  },
+  {
+    id: "abandoned_building", emoji: "🏚️", label: "Abandoned Buildings", days: "7–14", color: "#f87171",
+    desc: "Derelict structures posing safety hazards to the public."
+  },
+  {
+    id: "broken_streetlight", emoji: "💡", label: "Broken Streetlight", days: "3–5", color: "#fbbf24",
+    desc: "Non-functional streetlights affecting visibility and safety."
+  },
+  {
+    id: "water leakage", emoji: "💧", label: "Water Leakage", days: "2–4", color: "#3b82f6",
+    desc: "Burst pipes, water seepage, leaks causing water wastage or damage."
+  },
+  {
+    id: "flooded_road", emoji: "🌊", label: "Flooded Road", days: "5–10", color: "#60a5fa",
+    desc: "Roads submerged due to heavy rains, poor drainage, causing traffic disruption."
   }
 ];
 
 const SEVERITIES = [
-  { id:"low",       label:"Low",       desc:"Minor inconvenience",        color:"#34d399", bg:"rgba(52,211,153,.12)" },
-  { id:"medium",    label:"Medium",    desc:"Affects daily routine",      color:"#fbbf24", bg:"rgba(251,191,36,.12)" },
-  { id:"high",      label:"High",      desc:"Safety concern",             color:"#fb923c", bg:"rgba(251,146,60,.12)" },
-  { id:"emergency", label:"Emergency", desc:"Immediate danger",           color:"#f87171", bg:"rgba(248,113,113,.12)" },
+  { id: "low", label: "Low", desc: "Minor inconvenience", color: "#34d399", bg: "rgba(52,211,153,.12)" },
+  { id: "medium", label: "Medium", desc: "Affects daily routine", color: "#fbbf24", bg: "rgba(251,191,36,.12)" },
+  { id: "high", label: "High", desc: "Safety concern", color: "#fb923c", bg: "rgba(251,146,60,.12)" },
+  { id: "emergency", label: "Emergency", desc: "Immediate danger", color: "#f87171", bg: "rgba(248,113,113,.12)" },
 ];
 
 // BBMP zone detection by lat/lng bounding boxes (simplified)
 const ZONES = [
-  { name:"Mahadevapura",    bounds:{ latMin:12.95, latMax:13.02, lngMin:77.66, lngMax:77.76 } },
-  { name:"Bommanahalli",    bounds:{ latMin:12.87, latMax:12.93, lngMin:77.60, lngMax:77.68 } },
-  { name:"Dasarahalli",     bounds:{ latMin:13.03, latMax:13.08, lngMin:77.50, lngMax:77.57 } },
-  { name:"Byatarayanapura", bounds:{ latMin:13.05, latMax:13.12, lngMin:77.57, lngMax:77.65 } },
-  { name:"RR Nagar",        bounds:{ latMin:12.91, latMax:12.96, lngMin:77.50, lngMax:77.56 } },
-  { name:"Yelahanka",       bounds:{ latMin:13.08, latMax:13.15, lngMin:77.57, lngMax:77.64 } },
-  { name:"West Zone",       bounds:{ latMin:12.94, latMax:13.00, lngMin:77.51, lngMax:77.57 } },
+  { name: "Mahadevapura", bounds: { latMin: 12.95, latMax: 13.02, lngMin: 77.66, lngMax: 77.76 } },
+  { name: "Bommanahalli", bounds: { latMin: 12.87, latMax: 12.93, lngMin: 77.60, lngMax: 77.68 } },
+  { name: "Dasarahalli", bounds: { latMin: 13.03, latMax: 13.08, lngMin: 77.50, lngMax: 77.57 } },
+  { name: "Byatarayanapura", bounds: { latMin: 13.05, latMax: 13.12, lngMin: 77.57, lngMax: 77.65 } },
+  { name: "RR Nagar", bounds: { latMin: 12.91, latMax: 12.96, lngMin: 77.50, lngMax: 77.56 } },
+  { name: "Yelahanka", bounds: { latMin: 13.08, latMax: 13.15, lngMin: 77.57, lngMax: 77.64 } },
+  { name: "West Zone", bounds: { latMin: 12.94, latMax: 13.00, lngMin: 77.51, lngMax: 77.57 } },
 ];
 
 function detectZone(lat, lng) {
-  const z = ZONES.find(z => lat>=z.bounds.latMin && lat<=z.bounds.latMax && lng>=z.bounds.lngMin && lng<=z.bounds.lngMax);
+  const z = ZONES.find(z => lat >= z.bounds.latMin && lat <= z.bounds.latMax && lng >= z.bounds.lngMin && lng <= z.bounds.lngMax);
   return z ? z.name : "Central";
 }
 
 // Simulated nearby complaints
 function getNearbyComplaints(lat, lng) {
   return [
-    { id:"CBR-1021", lat:lat+0.002, lng:lng+0.003, cat:"Pot Holes",           severity:"high",   status:"In Progress" },
-    { id:"CBR-0987", lat:lat-0.003, lng:lng+0.001, cat:"Garbage",             severity:"medium", status:"Submitted" },
-    { id:"CBR-1105", lat:lat+0.001, lng:lng-0.004, cat:"Tree Debris",         severity:"low",    status:"Resolved" },
-    { id:"CBR-0932", lat:lat-0.002, lng:lng-0.002, cat:"Abandoned Vehicle",   severity:"high",   status:"Acknowledged" },
+    { id: "CBR-1021", lat: lat + 0.002, lng: lng + 0.003, cat: "Pot Holes", severity: "high", status: "In Progress" },
+    { id: "CBR-0987", lat: lat - 0.003, lng: lng + 0.001, cat: "Garbage", severity: "medium", status: "Submitted" },
+    { id: "CBR-1105", lat: lat + 0.001, lng: lng - 0.004, cat: "Tree Debris", severity: "low", status: "Resolved" },
+    { id: "CBR-0932", lat: lat - 0.002, lng: lng - 0.002, cat: "Abandoned Vehicle", severity: "high", status: "Acknowledged" },
   ];
 }
 
@@ -97,7 +112,7 @@ function StepBar({ current, total, labels }) {
             {i < current ? "✓" : i + 1}
           </div>
           <span className="cf-step-label">{lbl}</span>
-          {i < total - 1 && <div className="cf-step-line"/>}
+          {i < total - 1 && <div className="cf-step-line" />}
         </div>
       ))}
     </div>
@@ -114,10 +129,10 @@ function PhotoCard({ file, onRemove }) {
   }, [file]);
   return (
     <div className="cf-photo-card">
-      {url && <img src={url} alt={file.name} className="cf-photo-thumb"/>}
+      {url && <img src={url} alt={file.name} className="cf-photo-thumb" />}
       <div className="cf-photo-info">
-        <span className="cf-photo-name">{file.name.length > 20 ? file.name.slice(0,18)+"…" : file.name}</span>
-        <span className="cf-photo-size">{(file.size/1024).toFixed(0)} KB</span>
+        <span className="cf-photo-name">{file.name.length > 20 ? file.name.slice(0, 18) + "…" : file.name}</span>
+        <span className="cf-photo-size">{(file.size / 1024).toFixed(0)} KB</span>
       </div>
       <button type="button" className="cf-photo-remove" onClick={onRemove}>✕</button>
     </div>
@@ -135,7 +150,7 @@ function SeverityPicker({ value, onChange }) {
           style={value === s.id ? { borderColor: s.color, background: s.bg, "--sc": s.color } : { "--sc": s.color }}
           onClick={() => onChange(s.id)}
         >
-          <span className="cf-sev-dot" style={{ background: s.color }}/>
+          <span className="cf-sev-dot" style={{ background: s.color }} />
           <div>
             <span className="cf-sev-name" style={value === s.id ? { color: s.color } : {}}>{s.label}</span>
             <span className="cf-sev-desc">{s.desc}</span>
@@ -148,18 +163,18 @@ function SeverityPicker({ value, onChange }) {
 
 /* ── Main component ── */
 export default function ComplaintForm() {
-  const [step,        setStep]        = useState(0);
-  const [category,    setCategory]    = useState("");
-  const [severity,    setSeverity]    = useState("");
-  const [desc,        setDesc]        = useState("");
-  const [photos,      setPhotos]      = useState([]);
-  const [location,    setLocation]    = useState(null);
-  const [zone,        setZone]        = useState("");
-  const [locLoading,  setLocLoading]  = useState(false);
-  const [dragOver,    setDragOver]    = useState(false);
-  const [aiSuggestion,setAiSuggestion]= useState(null);
-  const [aiLoading,   setAiLoading]   = useState(false);
-  const [submitted,   setSubmitted]   = useState(false);
+  const [step, setStep] = useState(0);
+  const [category, setCategory] = useState("");
+  const [severity, setSeverity] = useState("");
+  const [desc, setDesc] = useState("");
+  const [photos, setPhotos] = useState([]);
+  const [location, setLocation] = useState(null);
+  const [zone, setZone] = useState("");
+  const [locLoading, setLocLoading] = useState(false);
+  const [dragOver, setDragOver] = useState(false);
+  const [aiSuggestion, setAiSuggestion] = useState(null);
+  const [aiLoading, setAiLoading] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
   const [complaintId, setComplaintId] = useState("");
   const [nearbyComps, setNearbyComps] = useState([]);
   const aiTimer = useRef();
@@ -204,45 +219,45 @@ export default function ComplaintForm() {
   };
 
   const removePhoto = idx => setPhotos(prev => prev.filter((_, i) => i !== idx));
-const handleSubmit = async () => {
-  try {
+  const handleSubmit = async () => {
+    try {
 
-    console.log("🚀 Sending complaint...");
+      console.log("🚀 Sending complaint...");
 
-    const formData = new FormData();
+      const formData = new FormData();
 
-    formData.append("category", category);
-    formData.append("description", desc);
-    formData.append("latitude", location.lat);
-    formData.append("longitude", location.lng);
+      formData.append("category", category);
+      formData.append("description", desc);
+      formData.append("latitude", location.lat);
+      formData.append("longitude", location.lng);
 
-    if (photos.length > 0) {
-      formData.append("image", photos[0]);
+      if (photos.length > 0) {
+        formData.append("image", photos[0]);
+      }
+
+      const res = await fetch("/submit-complaint", {
+        method: "POST",
+        body: formData
+      });
+
+      console.log("📡 Status:", res.status);
+
+      if (!res.ok) {
+        throw new Error("Server error");
+      }
+
+      const data = await res.json();
+
+      console.log("✅ SUCCESS:", data);
+
+      setComplaintId(data.complaint_id);
+      setSubmitted(true);
+
+    } catch (err) {
+      console.error("❌ ERROR:", err);
+      alert("Failed to submit complaint");
     }
-
-    const res = await fetch("http://127.0.0.1:8000/submit-complaint", {
-      method: "POST",
-      body: formData
-    });
-
-    console.log("📡 Status:", res.status);
-
-    if (!res.ok) {
-      throw new Error("Server error");
-    }
-
-    const data = await res.json();
-
-    console.log("✅ SUCCESS:", data);
-
-    setComplaintId(data.complaint_id);
-    setSubmitted(true);
-
-  } catch (err) {
-    console.error("❌ ERROR:", err);
-    alert("Failed to submit complaint");
-  }
-};
+  };
 
 
 
@@ -257,17 +272,16 @@ const handleSubmit = async () => {
 
   /* ── Nearby marker icon ── */
   const nearbyIcon = (status) => L.divIcon({
-    className:"",
-    html:`<div style="width:11px;height:11px;border-radius:50%;background:${
-      status==="Resolved"?"#34d399":status==="In Progress"?"#fbbf24":"#f87171"
-    };border:2px solid rgba(255,255,255,.8);box-shadow:0 2px 6px rgba(0,0,0,.4)"></div>`,
-    iconSize:[11,11], iconAnchor:[5,5],
+    className: "",
+    html: `<div style="width:11px;height:11px;border-radius:50%;background:${status === "Resolved" ? "#34d399" : status === "In Progress" ? "#fbbf24" : "#f87171"
+      };border:2px solid rgba(255,255,255,.8);box-shadow:0 2px 6px rgba(0,0,0,.4)"></div>`,
+    iconSize: [11, 11], iconAnchor: [5, 5],
   });
 
   const userIcon = L.divIcon({
-    className:"",
-    html:`<div style="width:16px;height:16px;border-radius:50%;background:#6366f1;border:3px solid white;box-shadow:0 0 0 3px rgba(99,102,241,.4),0 2px 8px rgba(0,0,0,.5)"></div>`,
-    iconSize:[16,16], iconAnchor:[8,8],
+    className: "",
+    html: `<div style="width:16px;height:16px;border-radius:50%;background:#6366f1;border:3px solid white;box-shadow:0 0 0 3px rgba(99,102,241,.4),0 2px 8px rgba(0,0,0,.5)"></div>`,
+    iconSize: [16, 16], iconAnchor: [8, 8],
   });
 
   /* ── Success screen ── */
@@ -281,9 +295,9 @@ const handleSubmit = async () => {
         <span className="cf-id-note">Save this ID to track your complaint status</span>
       </div>
       <div className="cf-success-timeline">
-        {["Submitted","Acknowledged","In Progress","Resolved"].map((s,i)=>(
-          <div key={s} className={`cf-tl-step ${i===0?"cf-tl-active":""}`}>
-            <div className="cf-tl-dot"/>
+        {["Submitted", "Acknowledged", "In Progress", "Resolved"].map((s, i) => (
+          <div key={s} className={`cf-tl-step ${i === 0 ? "cf-tl-active" : ""}`}>
+            <div className="cf-tl-dot" />
             <span className="cf-tl-label">{s}</span>
           </div>
         ))}
@@ -304,7 +318,7 @@ const handleSubmit = async () => {
     <div className="cf-wizard">
 
       {/* Step bar */}
-      <StepBar current={step} total={STEPS.length} labels={STEPS}/>
+      <StepBar current={step} total={STEPS.length} labels={STEPS} />
 
       {/* ── STEP 0: Category ── */}
       {step === 0 && (
@@ -318,7 +332,7 @@ const handleSubmit = async () => {
           {aiSuggestion && desc.length > 10 && (
             <div className="cf-ai-banner">
               <span className="cf-ai-icon">🤖</span>
-              <span>Based on your description, did you mean <strong>{CATEGORIES.find(c=>c.id===aiSuggestion)?.label}</strong>?</span>
+              <span>Based on your description, did you mean <strong>{CATEGORIES.find(c => c.id === aiSuggestion)?.label}</strong>?</span>
               <button type="button" className="cf-ai-apply" onClick={() => setCategory(aiSuggestion)}>Apply →</button>
             </div>
           )}
@@ -346,7 +360,7 @@ const handleSubmit = async () => {
           )}
 
           <div className="cf-nav">
-            <span/>
+            <span />
             <button className="cf-btn-gold" disabled={!category} onClick={() => setStep(1)}>
               Next → Details
             </button>
@@ -369,7 +383,7 @@ const handleSubmit = async () => {
               {aiLoading && <span className="cf-ai-thinking">🤖 analysing…</span>}
               {aiSuggestion && !aiLoading && category !== aiSuggestion && (
                 <button type="button" className="cf-ai-inline" onClick={() => { setCategory(aiSuggestion); }}>
-                  🤖 Switch to "{CATEGORIES.find(c=>c.id===aiSuggestion)?.label}"?
+                  🤖 Switch to "{CATEGORIES.find(c => c.id === aiSuggestion)?.label}"?
                 </button>
               )}
             </label>
@@ -386,7 +400,7 @@ const handleSubmit = async () => {
           {/* Severity */}
           <div className="cf-field">
             <label className="cf-label">Severity <span className="cf-req">*</span></label>
-            <SeverityPicker value={severity} onChange={setSeverity}/>
+            <SeverityPicker value={severity} onChange={setSeverity} />
           </div>
 
           {/* Photos */}
@@ -402,7 +416,7 @@ const handleSubmit = async () => {
               onDrop={e => { e.preventDefault(); setDragOver(false); addPhotos(e.dataTransfer.files); }}
               onClick={() => document.getElementById("cf-photo-input").click()}
             >
-              <input id="cf-photo-input" type="file" accept="image/*" multiple style={{ display:"none" }} onChange={e => addPhotos(e.target.files)}/>
+              <input id="cf-photo-input" type="file" accept="image/*" multiple style={{ display: "none" }} onChange={e => addPhotos(e.target.files)} />
               <span className="cf-dz-icon">📤</span>
               <span className="cf-dz-text">Drag & drop or <span className="cf-dz-link">browse</span></span>
               <span className="cf-dz-hint">JPG, PNG — up to 5 photos, 10 MB each</span>
@@ -411,7 +425,7 @@ const handleSubmit = async () => {
             {photos.length > 0 && (
               <div className="cf-photo-grid">
                 {photos.map((f, i) => (
-                  <PhotoCard key={i} file={f} onRemove={() => removePhoto(i)}/>
+                  <PhotoCard key={i} file={f} onRemove={() => removePhoto(i)} />
                 ))}
               </div>
             )}
@@ -442,7 +456,7 @@ const handleSubmit = async () => {
               disabled={locLoading}
             >
               {locLoading
-                ? <><span className="cf-spinner"/> Detecting location…</>
+                ? <><span className="cf-spinner" /> Detecting location…</>
                 : location
                   ? <>📍 {location.lat}, {location.lng}</>
                   : <>📍 Capture My Location</>
@@ -460,18 +474,18 @@ const handleSubmit = async () => {
               {/* Map */}
               <div className="cf-map-wrap">
                 <MapContainer center={[location.lat, location.lng]} zoom={15} className="cf-leaflet" scrollWheelZoom={false}>
-                  <TileLayer url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png" attribution="&copy; OSM &copy; CARTO"/>
-                  <MapRecenter lat={location.lat} lng={location.lng}/>
+                  <TileLayer url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png" attribution="&copy; OSM &copy; CARTO" />
+                  <MapRecenter lat={location.lat} lng={location.lng} />
                   <Marker position={[location.lat, location.lng]} icon={userIcon}>
                     <Popup><strong>Your location</strong></Popup>
                   </Marker>
-                  <Circle center={[location.lat, location.lng]} radius={300} pathOptions={{ color:"#6366f1", fillColor:"#6366f1", fillOpacity:.08, weight:1 }}/>
+                  <Circle center={[location.lat, location.lng]} radius={300} pathOptions={{ color: "#6366f1", fillColor: "#6366f1", fillOpacity: .08, weight: 1 }} />
                   {nearbyComps.map(c => (
                     <Marker key={c.id} position={[c.lat, c.lng]} icon={nearbyIcon(c.status)}>
                       <Popup>
-                        <strong>{c.id}</strong><br/>
-                        {c.cat}<br/>
-                        <span style={{ fontSize:11, color:"#888" }}>{c.status}</span>
+                        <strong>{c.id}</strong><br />
+                        {c.cat}<br />
+                        <span style={{ fontSize: 11, color: "#888" }}>{c.status}</span>
                       </Popup>
                     </Marker>
                   ))}
@@ -487,7 +501,7 @@ const handleSubmit = async () => {
                       <div key={c.id} className="cf-nearby-item">
                         <div className="cf-nearby-id">{c.id}</div>
                         <div className="cf-nearby-cat">{c.cat}</div>
-                        <div className={`cf-nearby-status cf-ns-${c.status.toLowerCase().replace(" ","-")}`}>{c.status}</div>
+                        <div className={`cf-nearby-status cf-ns-${c.status.toLowerCase().replace(" ", "-")}`}>{c.status}</div>
                       </div>
                     ))}
                   </div>
@@ -521,7 +535,7 @@ const handleSubmit = async () => {
             <div className="cf-review-card">
               <span className="cf-review-label">Severity</span>
               <span className="cf-review-val" style={{ color: sevObj?.color }}>
-                <span className="cf-sev-dot" style={{ background: sevObj?.color }}/>
+                <span className="cf-sev-dot" style={{ background: sevObj?.color }} />
                 {sevObj?.label}
               </span>
             </div>
@@ -531,7 +545,7 @@ const handleSubmit = async () => {
             </div>
             <div className="cf-review-card">
               <span className="cf-review-label">Location</span>
-              <span className="cf-review-val" style={{ fontSize:13 }}>📍 {location?.lat}, {location?.lng}</span>
+              <span className="cf-review-val" style={{ fontSize: 13 }}>📍 {location?.lat}, {location?.lng}</span>
             </div>
             <div className="cf-review-card cf-review-full">
               <span className="cf-review-label">Description</span>
@@ -541,9 +555,9 @@ const handleSubmit = async () => {
               <div className="cf-review-card cf-review-full">
                 <span className="cf-review-label">Photos ({photos.length})</span>
                 <div className="cf-review-photos">
-                  {photos.map((f,i)=>{
+                  {photos.map((f, i) => {
                     const url = URL.createObjectURL(f);
-                    return <img key={i} src={url} alt="" className="cf-review-photo"/>;
+                    return <img key={i} src={url} alt="" className="cf-review-photo" />;
                   })}
                 </div>
               </div>
