@@ -1,4 +1,5 @@
 from fastapi import FastAPI, UploadFile, File, Form
+from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 from typing import Optional
 import uvicorn
@@ -40,8 +41,11 @@ app.add_middleware(
 
 UPLOAD_FOLDER = "uploads"
 DATA_FILE = "complaints.json"
+FRONTEND_DIST = os.path.join(os.path.dirname(os.path.dirname(__file__)), "frontend", "dist")
 
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+app.mount("/uploads", StaticFiles(directory="uploads"), name="uploads")
+app.mount("/assets", StaticFiles(directory=os.path.join(FRONTEND_DIST, "assets")), name="assets")
 
 if not os.path.exists(DATA_FILE):
     with open(DATA_FILE, "w") as f:
@@ -150,15 +154,15 @@ def analytics():
 
     today = datetime.now().strftime("%Y-%m-%d")
 
-    today_count = sum(1 for c in complaints if c["created_at"] == today)
+    today_count = sum(1 for c in complaints if c.get("created_at") == today)
 
-    high_severity = sum(1 for c in complaints if c["severity"] == "high")
+    high_severity = sum(1 for c in complaints if c.get("severity", "medium") == "high")
 
-    category_counts = Counter(c["category"] for c in complaints)
+    category_counts = Counter(c.get("category", "unknown") for c in complaints)
 
-    severity_counts = Counter(c["severity"] for c in complaints)
+    severity_counts = Counter(c.get("severity", "medium") for c in complaints)
 
-    daily_counts = Counter(c["created_at"] for c in complaints)
+    daily_counts = Counter(c.get("created_at", "unknown") for c in complaints)
 
     # ---------- hotspot detection ----------
 
@@ -240,12 +244,13 @@ def analytics():
     }
 
 
-@app.get("/")
-def root():
-    return {"status": "API running"}
+from fastapi.responses import HTMLResponse
 
-
-from datetime import datetime
+@app.get("/", response_class=HTMLResponse)
+@app.get("/{catchall:path}", response_class=HTMLResponse)
+def serve_frontend(catchall: str = ""):
+    with open(os.path.join(FRONTEND_DIST, "index.html"), "r") as f:
+        return f.read()
 
 def compute_priority(complaint, all_complaints):
 
