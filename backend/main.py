@@ -44,8 +44,8 @@ DATA_FILE = "complaints.json"
 FRONTEND_DIST = os.path.join(os.path.dirname(os.path.dirname(__file__)), "frontend", "dist")
 
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
-app.mount("/uploads", StaticFiles(directory="uploads"), name="uploads")
-app.mount("/assets", StaticFiles(directory=os.path.join(FRONTEND_DIST, "assets")), name="assets")
+# app.mount("/uploads", StaticFiles(directory="uploads"), name="uploads")
+# app.mount("/assets", StaticFiles(directory=os.path.join(FRONTEND_DIST, "assets")), name="assets")
 
 if not os.path.exists(DATA_FILE):
     with open(DATA_FILE, "w") as f:
@@ -246,11 +246,11 @@ def analytics():
 
 from fastapi.responses import HTMLResponse
 
-@app.get("/", response_class=HTMLResponse)
-@app.get("/{catchall:path}", response_class=HTMLResponse)
-def serve_frontend(catchall: str = ""):
-    with open(os.path.join(FRONTEND_DIST, "index.html"), "r") as f:
-        return f.read()
+# @app.get("/", response_class=HTMLResponse)
+# @app.get("/{catchall:path}", response_class=HTMLResponse)
+# def serve_frontend(catchall: str = ""):
+#     with open(os.path.join(FRONTEND_DIST, "index.html"), "r") as f:
+#         return f.read()
 
 def compute_priority(complaint, all_complaints):
 

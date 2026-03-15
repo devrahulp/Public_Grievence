@@ -33,10 +33,12 @@ function AdminDashboard() {
     setLoading(true);
     setError(null);
 
-    Promise.all([
-      fetch("/complaints").then(r => { if (!r.ok) throw new Error("API error"); return r.json(); }),
-      fetch("/analytics").then(r => { if (!r.ok) throw new Error("API error"); return r.json(); })
-    ])
+   const API = "http://127.0.0.1:8000";
+
+Promise.all([
+  fetch(`${API}/complaints`).then(r => { if (!r.ok) throw new Error("API error"); return r.json(); }),
+  fetch(`${API}/analytics`).then(r => { if (!r.ok) throw new Error("API error"); return r.json(); })
+])
       .then(([complaintsData, analyticsData]) => {
         setComplaints(complaintsData);
         setAnalytics(analyticsData);
