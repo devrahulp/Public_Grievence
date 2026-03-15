@@ -8,13 +8,22 @@ import os
 import json
 from datetime import datetime
 from collections import Counter
-from clip_model import classify_image, get_severity
+from backend.clip_model import classify_image, get_severity
 import matplotlib.pyplot as plt
 from io import BytesIO
 import base64
 from datetime import timedelta
 
 app = FastAPI()
+
+from fastapi import FastAPI
+
+app = FastAPI()
+
+@app.get("/")
+def home():
+    return {"message": "CivicVoice API is running"}
+    
 CATEGORY_DEADLINES = {
     "tree": 4,
     "garbage": 2,
