@@ -33,7 +33,7 @@ function AdminDashboard() {
     setLoading(true);
     setError(null);
 
-   const API = "http://127.0.0.1:8000";
+   const API = "https://public-grievence-3ce6.onrender.com";
 
 Promise.all([
   fetch(`${API}/complaints`).then(r => { if (!r.ok) throw new Error("API error"); return r.json(); }),
